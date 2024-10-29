@@ -2,6 +2,82 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+body {
+  margin: 0; /* Elimina el margen por defecto del body */
+  padding: 0; /* Elimina el padding por defecto del body */
+  background-image: url("/bg.png");
+  background-size: cover; /* Ajusta la imagen para cubrir todo el body */
+  background-position: center; /* Centra la imagen en el body */
+  background-repeat: repeat;
+}
+
+.selection {
+  margin: 0; /* Elimina el margen por defecto del body */
+  padding: 0; /* Elimina el padding por defecto del body */
+  /* background-image: url("/Selection.png"); Original*/
+  background-image: url("/Selection2.png");
+  background-size: cover; /* Ajusta la imagen para cubrir todo el body */
+  background-position: center; /* Centra la imagen en el body */
+  background-repeat: repeat;
+}
+
+.videoshow {
+  margin: 0; /* Elimina el margen por defecto del body */
+  padding: 0; /* Elimina el padding por defecto del body */
+  background-image: url("/video.png");
+  background-size: cover; /* Ajusta la imagen para cubrir todo el body */
+  background-position: center; /* Centra la imagen en el body */
+  background-repeat: repeat;
+}
+
+.welcome {
+  margin: 0; /* Elimina el margen por defecto del body */
+  padding: 0; /* Elimina el padding por defecto del body */
+  background-image: url("/welcomeTransparent.png");
+  background-size: cover; /* Ajusta la imagen para cubrir todo el body */
+  background-position: center; /* Centra la imagen en el body */
+  background-repeat: repeat;
+  z-index: 10;
+}
+
+.outro {
+  margin: 0; /* Elimina el margen por defecto del body */
+  padding: 0; /* Elimina el padding por defecto del body */
+  background-image: url("/Despedida.png");
+  background-size: cover; /* Ajusta la imagen para cubrir todo el body */
+  background-position: center; /* Centra la imagen en el body */
+  background-repeat: repeat;
+  z-index: 10;
+}
+
+.register {
+  margin: 0; /* Elimina el margen por defecto del body */
+  padding: 0; /* Elimina el padding por defecto del body */
+  background-image: url("/register.png");
+  background-size: cover; /* Ajusta la imagen para cubrir todo el body */
+  background-position: center; /* Centra la imagen en el body */
+  background-repeat: repeat;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.blink {
+  animation: blink 1s infinite;
+}
+
+/* @tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -18,4 +94,4 @@ body {
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
-}
+} */
