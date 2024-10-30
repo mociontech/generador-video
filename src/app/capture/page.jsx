@@ -206,7 +206,7 @@ export default function Capture() {
                   <img src={imageBase64} width="800" height="600" />
                   
                   {/* Contenedor de botones en fila */}
-                  <div className="flex space-x-4">
+                 {!cargandoVideo && <div className="flex space-x-4">
                     {/* Botón "Generar" */}
                     <button
                       onClick={generar}
@@ -228,7 +228,7 @@ export default function Capture() {
                     >
                       Cambiar Foto
                     </button>
-                  </div>
+                  </div>}
                 </div>
               )}
             </div>

@@ -43,7 +43,7 @@ export default function RegisterPage() {
   };
 
   return (
-    <main className="register w-screen h-screen flex flex-col justify-start items-center pt-[102px] relative">
+    <main className="register w-screen h-screen flex flex-col justify-start items-center pt-[50px] relative">
       {isLoading && (
         <div className="absolute z-50 h-screen w-screen flex justify-center items-center bg-black/50">
           <svg
@@ -60,7 +60,7 @@ export default function RegisterPage() {
           </svg>
         </div>
       )}
-      <form onSubmit={handleSubmit} className="pt-[180px]">
+      <form onSubmit={handleSubmit} className="pt-[70px]">
         <div className="flex flex-col pt-[150px] pb-10 w-[820px]">
           <img
             src="/register/register.svg"
