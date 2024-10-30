@@ -234,7 +234,7 @@ export default function Capture() {
             </div>
           )}
           {/* Mensaje "Cargando video" con margen superior */}
-          {cargandoVideo && <p className="text-white text-[50px] mb-20 ml-10 blink">Generando video... 1-2 minutos</p>}
+          {cargandoVideo && <p className="text-white text-[50px] mb-20 ml-10 blink">Generando video esto podria tomar 2-5 minutos</p>}
   
           {/* Contenedor del video capturado con margen superior cuando también hay imagen capturada */}
           {videoUrl && (
