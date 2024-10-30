@@ -2,6 +2,8 @@
 
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
+import OutroPage from "../outro/page";
+
 
 export default function Capture() {
   const [image, setImage] = useState(null);
@@ -16,6 +18,8 @@ export default function Capture() {
   const [mostrarCamara, setMostrarCamara] = useState(false);
   const [mostrarBotones, setMostrarBotones] = useState(false);
   const [cargandoVideo, setCargandoVideo] = useState(false);
+  const [contadorValue, setContadorValue] = useState(5);
+  const [mostrarOutroPage, setMostrarOutroPage] = useState(false);
 
   const router = useRouter();
 
@@ -28,9 +32,9 @@ export default function Capture() {
   let contador = 5;
 
   const iniciar = async () => {
+    await abrirCamara(); // Llamar a abrirCamara aquí
     setMostrarCamara(true);
     contador = 5;
-    await abrirCamara(); // Llamar a abrirCamara aquí
     const interval = setInterval(() => {
       contador--;
       if (contador === 0) {
@@ -90,7 +94,7 @@ export default function Capture() {
       setResponse(data);
       setShowConsultarStatus(true);
     } catch (error) {
-      setError(error.message);
+      console.log(error.message);
     } finally {
       setLoading(false);
     }
@@ -152,6 +156,16 @@ export default function Capture() {
     };
   }, []);
 
+  useEffect(() => {
+    if (mostrarCamara && !mostrarBotones) {
+      abrirCamara();
+      let interval = setInterval(() => {
+        setContadorValue((prevContador) => prevContador - 1);
+      }, 1000);
+      return () => clearInterval(interval);
+    }
+  }, [mostrarCamara, mostrarBotones]);
+
   return (
     <div
       className="selection relative flex items-center justify-center w-screen h-screen bg-blue-900"
@@ -167,13 +181,28 @@ export default function Capture() {
       )}
 
       {/* Contenedor de la cámara */}
-        {mostrarCamara && (
-          <div className="flex flex-col items-center space-y-4 ">
+      {mostrarCamara && (
+        <div className="flex flex-col items-center space-y-4 ">
+          {/* Vista de la cámara */}
+          {!mostrarBotones && (
+            <div>
+              <video
+                id="video"
+                autoPlay
+                muted
+                width="800"
+                height="600"
+                style={{ objectFit: "cover" }}
+              />
+              <p className="text-white text-[50px]">La foto se tomara en ... {contadorValue}</p>
+            </div>
+          )}
+
           {/* Imagen capturada */}
-          {mostrarBotones ? (
+          {mostrarBotones && (
             <div className="flex flex-col items-center space-y-4">
               <img src={imageBase64} width="800" height="600" />
-        
+              
               {/* Contenedor de botones en fila */}
               <div className="flex space-x-4">
                 {/* Botón "Generar" */}
@@ -184,59 +213,45 @@ export default function Capture() {
                 >
                   {loading ? "Generando..." : "Generar"}
                 </button>
-        
+              
                 {/* Botón "Volver a tomar la foto" */}
                 <button
                   onClick={() => {
                     setMostrarBotones(false);
                     setMostrarCamara(true);
-                    contador = 5;
+                    setContadorValue(5);
                     iniciar();
                   }}
                   className="font-montserrat text-[40px] font-bold w-[500px] bg-[#EB0AFF] text-white py-0 rounded-3xl h-[80px]"
                 >
-                  Volver a tomar la foto
+                  Cambiar Foto
                 </button>
               </div>
             </div>
-          ) : (
-            <p className="text-white text-[50px]">Preparando cámara... {contador}</p>
           )}
         </div>
       )}
-
       {/* Mensaje "Cargando video" con margen superior */}
-      {cargandoVideo && <p className="text-white text-[50px] mb-20 ml-10 blink">Cargando video...</p>}
+      {cargandoVideo && <p className="text-white text-[50px] mb-20 ml-10 blink">Generando video... 1-2 minutos</p>}
 
       {/* Contenedor del video capturado con margen superior cuando también hay imagen capturada */}
       {videoUrl && (
         <div className={`flex flex-col items-center space-y-4 ${imageBase64 ? 'mb-20 ml-10' : ''}`}>
-          <video controls width="800" height="600">
+          <video loop autoPlay width="800" height="600">
             <source src={videoUrl} type="video/mp4" />
             Tu navegador no soporta el formato de video.
           </video>
-
           {/* Botón "Finalizar" */}
           <button
-            onClick={() => {
-              setMostrarCamara(false);
-              setMostrarBotones(false);
-              setCargandoVideo(false);
-              setVideoUrl(null);
-            }}
+            onClick={() => setMostrarOutroPage(true)}
             className="font-montserrat text-[40px] font-bold w-[300px] bg-[#EB0AFF] text-white py-0 rounded-3xl h-[80px]"
           >
-            Finalizar
+            Generar Qr
           </button>
+          {mostrarOutroPage && <OutroPage videoUrl={videoUrl} />}
         </div>
       )}
 
-      {/* Mensaje de error en una posición independiente */}
-      {error && (
-        <p className="text-white text-center text-[24px] mt-8 absolute bottom-10">
-          Error: {error}
-        </p>
-      )}
     </div>
   );
 }
