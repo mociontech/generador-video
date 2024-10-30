@@ -3,6 +3,7 @@
 /* import { useMail } from "@/hooks/useMail"; */
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+import { checkInService } from "../services/register.service";
 
 export default function RegisterPage() {
   const [formData, setFormData] = useState({
@@ -35,6 +36,7 @@ export default function RegisterPage() {
     e.preventDefault();
     if (validate()) {
       setIsLoading(true);
+      await checkInService.saveUserParticipation({ names: formData.name ,email: formData.email, points: 20, newParticipation: true });
       // Llamar a la función de registro aquí
       router.push("/capture");
     }
