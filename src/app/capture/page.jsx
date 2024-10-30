@@ -170,88 +170,96 @@ export default function Capture() {
     <div
       className="selection relative flex items-center justify-center w-screen h-screen bg-blue-900"
     >
-      {/* Botón "Iniciar" */}
-      {!mostrarCamara && (
-        <button
-          onClick={iniciar}
-          className="font-montserrat text-[50px] font-bold w-[600px] bg-[#EB0AFF] text-white py-0 rounded-3xl h-[100px]"
-        >
-          Iniciar
-        </button>
-      )}
-
-      {/* Contenedor de la cámara */}
-      {mostrarCamara && (
-        <div className="flex flex-col items-center space-y-4 ">
-          {/* Vista de la cámara */}
-          {!mostrarBotones && (
-            <div>
-              <video
-                id="video"
-                autoPlay
-                muted
-                width="800"
-                height="600"
-                style={{ objectFit: "cover" }}
-              />
-              <p className="text-white text-[50px]">La foto se tomara en ... {contadorValue}</p>
+      {!mostrarOutroPage && (
+        <>
+          {/* Botón "Iniciar" */}
+          {!mostrarCamara && (
+            <button
+              onClick={iniciar}
+              className="font-montserrat text-[50px] font-bold w-[600px] bg-[#EB0AFF] text-white py-0 rounded-3xl h-[100px]"
+            >
+              Iniciar
+            </button>
+          )}
+  
+          {/* Contenedor de la cámara */}
+          {mostrarCamara && (
+            <div className="flex flex-col items-center space-y-4 ">
+              {/* Vista de la cámara */}
+              {!mostrarBotones && (
+                <div>
+                  <video
+                    id="video"
+                    autoPlay
+                    muted
+                    width="800"
+                    height="600"
+                    style={{ objectFit: "cover" }}
+                  />
+                  <p className="text-white text-[50px]">La foto se tomara en ... {contadorValue}</p>
+                </div>
+              )}
+  
+              {/* Imagen capturada */}
+              {mostrarBotones && (
+                <div className="flex flex-col items-center space-y-4">
+                  <img src={imageBase64} width="800" height="600" />
+                  
+                  {/* Contenedor de botones en fila */}
+                  <div className="flex space-x-4">
+                    {/* Botón "Generar" */}
+                    <button
+                      onClick={generar}
+                      disabled={loading || !imageBase64}
+                      className="font-montserrat text-[40px] font-bold w-[300px] bg-[#EB0AFF] text-white py-0 rounded-3xl h-[80px]"
+                    >
+                      {loading ? "Generando..." : "Generar"}
+                    </button>
+                  
+                    {/* Botón "Volver a tomar la foto" */}
+                    <button
+                      onClick={() => {
+                        setMostrarBotones(false);
+                        setMostrarCamara(true);
+                        setContadorValue(5);
+                        iniciar();
+                      }}
+                      className="font-montserrat text-[40px] font-bold w-[500px] bg-[#EB0AFF] text-white py-0 rounded-3xl h-[80px]"
+                    >
+                      Cambiar Foto
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           )}
-
-          {/* Imagen capturada */}
-          {mostrarBotones && (
-            <div className="flex flex-col items-center space-y-4">
-              <img src={imageBase64} width="800" height="600" />
-              
-              {/* Contenedor de botones en fila */}
-              <div className="flex space-x-4">
-                {/* Botón "Generar" */}
-                <button
-                  onClick={generar}
-                  disabled={loading || !imageBase64}
-                  className="font-montserrat text-[40px] font-bold w-[300px] bg-[#EB0AFF] text-white py-0 rounded-3xl h-[80px]"
-                >
-                  {loading ? "Generando..." : "Generar"}
-                </button>
-              
-                {/* Botón "Volver a tomar la foto" */}
-                <button
-                  onClick={() => {
-                    setMostrarBotones(false);
-                    setMostrarCamara(true);
-                    setContadorValue(5);
-                    iniciar();
-                  }}
-                  className="font-montserrat text-[40px] font-bold w-[500px] bg-[#EB0AFF] text-white py-0 rounded-3xl h-[80px]"
-                >
-                  Cambiar Foto
-                </button>
-              </div>
+          {/* Mensaje "Cargando video" con margen superior */}
+          {cargandoVideo && <p className="text-white text-[50px] mb-20 ml-10 blink">Generando video... 1-2 minutos</p>}
+  
+          {/* Contenedor del video capturado con margen superior cuando también hay imagen capturada */}
+          {videoUrl && (
+            <div className={`flex flex-col items-center space-y-4 ${imageBase64 ? 'mb-20 ml-10' : ''}`}>
+              <video loop autoPlay width="800" height="600">
+                <source src={videoUrl} type="video/mp4" />
+                Tu navegador no soporta el formato de video.
+              </video>
+              {/* Botón "Finalizar" */}
+              <button
+                onClick={() => setMostrarOutroPage(true)}
+                className="font-montserrat text-[40px] font-bold w-[300px] bg-[#EB0AFF] text-white py-0 rounded-3xl h-[80px]"
+              >
+                Generar Qr
+              </button>
             </div>
           )}
+        </>
+      )}
+  
+      {mostrarOutroPage && (
+        <div className="absolute top-0 left-0 w-full h-full">
+          <OutroPage videoUrl={videoUrl} />
         </div>
       )}
-      {/* Mensaje "Cargando video" con margen superior */}
-      {cargandoVideo && <p className="text-white text-[50px] mb-20 ml-10 blink">Generando video... 1-2 minutos</p>}
-
-      {/* Contenedor del video capturado con margen superior cuando también hay imagen capturada */}
-      {videoUrl && (
-        <div className={`flex flex-col items-center space-y-4 ${imageBase64 ? 'mb-20 ml-10' : ''}`}>
-          <video loop autoPlay width="800" height="600">
-            <source src={videoUrl} type="video/mp4" />
-            Tu navegador no soporta el formato de video.
-          </video>
-          {/* Botón "Finalizar" */}
-          <button
-            onClick={() => setMostrarOutroPage(true)}
-            className="font-montserrat text-[40px] font-bold w-[300px] bg-[#EB0AFF] text-white py-0 rounded-3xl h-[80px]"
-          >
-            Generar Qr
-          </button>
-          {mostrarOutroPage && <OutroPage videoUrl={videoUrl} />}
-        </div>
-      )}
-
     </div>
   );
 }
