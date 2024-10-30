@@ -22,23 +22,23 @@ export default function RegisterPage() {
     setFormData({ ...formData, [name]: value });
   }
 
-  /* function validate() {
+  const validate = () => {
     const errors = {};
-    if (!formData.name || !formData.email )
+    if (!formData.name || !formData.email) {
       errors.isError = "Por favor llene todo los campos";
+    }
     setErrors(errors);
     return Object.keys(errors).length === 0;
-  } */
-
-  async function handleSubmit(e) {
-    /* e.preventDefault();
+  };
+  
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     if (validate()) {
       setIsLoading(true);
-      setMail(formData.email);
-      await register(formData.name, formData.email);
-    } el router va dentro del if */
-    router.push("/capture");
-  }
+      // Llamar a la función de registro aquí
+      router.push("/capture");
+    }
+  };
 
   return (
     <main className="register w-screen h-screen flex flex-col justify-start items-center pt-[102px] relative">
