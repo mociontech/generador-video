@@ -60,7 +60,7 @@ export default function RegisterPage() {
           </svg>
         </div>
       )}
-      <form onSubmit={handleSubmit} className="pt-[70px]">
+      <form onSubmit={handleSubmit} /* className="pt-[40px]" */>
         <div className="flex flex-col pt-[150px] pb-10 w-[820px]">
           <img
             src="/register/register.svg"
@@ -116,7 +116,7 @@ export default function RegisterPage() {
 
         <button
           type="submit"
-          className="font-montserrat text-[50px] font-bold w-full bg-[#EB0AFF] text-white py-0 rounded-3xl h-[120px] "
+          className="font-montserrat text-[50px] font-bold w-full bg-[#EB0AFF] text-white py-0 rounded-3xl h-[90px] "
         >
           Comenzar
         </button>

@@ -176,7 +176,7 @@ export default function Capture() {
           {!mostrarCamara && (
             <button
               onClick={iniciar}
-              className="font-montserrat text-[50px] font-bold w-[600px] bg-[#EB0AFF] text-white py-0 rounded-3xl h-[100px]"
+              className="font-montserrat text-[50px] font-bold w-[600px] bg-[#EB0AFF] text-white py-0 rounded-3xl h-[90px]"
             >
               Iniciar
             </button>
@@ -192,8 +192,8 @@ export default function Capture() {
                     id="video"
                     autoPlay
                     muted
-                    width="800"
-                    height="600"
+                    width="400"
+                    height="300"
                     style={{ objectFit: "cover" }}
                   />
                   <p className="text-white text-[50px]">La foto se tomara en ... {contadorValue}</p>
@@ -203,7 +203,7 @@ export default function Capture() {
               {/* Imagen capturada */}
               {mostrarBotones && (
                 <div className="flex flex-col items-center space-y-4">
-                  <img src={imageBase64} width="800" height="600" />
+                  <img src={imageBase64} width="400" height="300" />
                   
                   {/* Contenedor de botones en fila */}
                  {!cargandoVideo && <div className="flex space-x-4">
@@ -211,7 +211,7 @@ export default function Capture() {
                     <button
                       onClick={generar}
                       disabled={loading || !imageBase64}
-                      className="font-montserrat text-[40px] font-bold w-[300px] bg-[#EB0AFF] text-white py-0 rounded-3xl h-[80px]"
+                      className="font-montserrat text-[30px] font-bold w-[200px] bg-[#EB0AFF] text-white py-0 rounded-2xl h-[50px]"
                     >
                       {loading ? "Generando..." : "Generar"}
                     </button>
@@ -224,7 +224,7 @@ export default function Capture() {
                         setContadorValue(5);
                         iniciar();
                       }}
-                      className="font-montserrat text-[40px] font-bold w-[500px] bg-[#EB0AFF] text-white py-0 rounded-3xl h-[80px]"
+                      className="font-montserrat text-[30px] font-bold w-[250px] bg-[#EB0AFF] text-white py-0 rounded-2xl h-[50px]"
                     >
                       Cambiar Foto
                     </button>
@@ -234,19 +234,19 @@ export default function Capture() {
             </div>
           )}
           {/* Mensaje "Cargando video" con margen superior */}
-          {cargandoVideo && <p className="text-white text-[50px] mb-20 ml-10 blink">Generando video esto podria tomar 2-5 minutos</p>}
+          {cargandoVideo && <p className="text-white text-[50px] mb-20 ml-10 blink w-[450px]">Generando video esto podria tomar 2-5 minutos</p>}
   
           {/* Contenedor del video capturado con margen superior cuando también hay imagen capturada */}
           {videoUrl && (
-            <div className={`flex flex-col items-center space-y-4 ${imageBase64 ? 'mb-20 ml-10' : ''}`}>
-              <video loop autoPlay width="800" height="600">
+            <div className={`flex flex-col items-center space-y-4 pt-[80px] ${imageBase64 ? 'mb-20 ml-10' : ''}`}>
+              <video loop autoPlay width="500" height="400">
                 <source src={videoUrl} type="video/mp4" />
                 Tu navegador no soporta el formato de video.
               </video>
               {/* Botón "Finalizar" */}
               <button
                 onClick={() => setMostrarOutroPage(true)}
-                className="font-montserrat text-[40px] font-bold w-[300px] bg-[#EB0AFF] text-white py-0 rounded-3xl h-[80px]"
+                className="font-montserrat text-[30px] font-bold w-[300px] bg-[#EB0AFF] text-white py-0 rounded-2xl h-[50px]"
               >
                 Generar Qr
               </button>
